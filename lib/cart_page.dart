@@ -311,6 +311,7 @@ class _cartpageState extends State<cartpage> {
       ),
     );
   }
+  //for commit
   double subtotalprice() {
     double subtotal = 0;
     cartList.forEach((e) {
