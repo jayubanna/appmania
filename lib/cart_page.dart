@@ -92,7 +92,7 @@ class _cartpageState extends State<cartpage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 15, left: 260),
                   child: Text(
-                    "${subtotal+delivary}",
+                    "${subtotal + delivary}",
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                   ),
                 ),
@@ -141,15 +141,14 @@ class _cartpageState extends State<cartpage> {
             child: SingleChildScrollView(
               child: Column(
                   children: cartList.map((e) {
-                return Column(
+                return Stack(
                   children: [
                     Container(
                       margin: EdgeInsets.only(top: 10, left: 20),
                       height: 100,
                       width: 380,
                       decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           color: Color(0xffFFFFFF)),
                       child: Row(
                         children: [
@@ -157,63 +156,19 @@ class _cartpageState extends State<cartpage> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 40),
-                                      child: Text(
-                                        e["name"],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          if (e["qty"] > 1) {
-                                            e["qty"] = e["qty"] - 1;
-                                            setState(() {});
-                                          } else {
-                                            cartList.remove(e);
-                                            setState(() {});
-                                          }
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 20),
-                                          child: Icon(Icons.remove_circle),
-                                        )),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        e["qty"].toString(),
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          e["qty"] = e["qty"] + 1;
-                                          setState(() {});
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10),
-                                          child: Icon(
-                                              Icons.add_circle_rounded),
-                                        ))
-                                  ],
+                                padding: const EdgeInsets.only(top: 20,right: 130),
+                                child: Text(
+                                  e["name"],
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Row(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 150, top: 8),
+                                        right: 150, top: 5),
                                     child: Text(
                                       "\$" + e["price"].toString(),
                                       style: TextStyle(
@@ -222,15 +177,59 @@ class _cartpageState extends State<cartpage> {
                                     ),
                                   ),
                                   Text(
-                    "\$" + (e["qty"] * e["price"]).toStringAsFixed(2),
+                                    "\$" +
+                                        (e["qty"] * e["price"])
+                                            .toStringAsFixed(2),
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xffADAEAF)),
+                                        fontSize: 16, color: Color(0xffADAEAF)),
                                   )
                                 ],
                               ),
                             ],
                           )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 30,
+                      right: 20,
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              if (e["qty"] > 1) {
+                                e["qty"] = e["qty"] - 1;
+                                setState(() {});
+                              } else {
+                                cartList.remove(e);
+                                setState(() {});
+                              }
+                            },
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.only(left: 20),
+                              child: Icon(Icons.remove_circle),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 10),
+                            child: Text(
+                              e["qty"].toString(),
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                e["qty"] = e["qty"] + 1;
+                                setState(() {});
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10),
+                                child: Icon(
+                                    Icons.add_circle_rounded),
+                              ))
                         ],
                       ),
                     ),
@@ -270,8 +269,8 @@ class _cartpageState extends State<cartpage> {
               ],
             ),
           ),
-      Container(
-        margin: EdgeInsets.only(top: 510, left: 30),
+          Container(
+            margin: EdgeInsets.only(top: 510, left: 30),
             height: 65,
             width: 350,
             decoration: BoxDecoration(
@@ -311,12 +310,12 @@ class _cartpageState extends State<cartpage> {
       ),
     );
   }
-  //for commit
+
   double subtotalprice() {
     double subtotal = 0;
     cartList.forEach((e) {
       subtotal += e["qty"] * e["price"];
     });
     return subtotal;
-}
+  }
 }
